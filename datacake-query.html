@@ -1,0 +1,43 @@
+<script type="text/x-red" data-template-name="datacake-query">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Datacake Query">
+  </div>
+  <div class="form-row">
+    <label for="node-input-config"><i class="fa fa-cog"></i> Configuration</label>
+    <input type="text" id="node-input-config">
+  </div>
+  <div class="form-row">
+    <label for="node-input-query"><i class="fa fa-code"></i> GraphQL Query</label>
+    <textarea id="node-input-query" style="width:100%;height:180px"
+      placeholder='query { allDevices(inWorkspace:"<UUID>"){ id serialNumber verboseName online } }'></textarea>
+  </div>
+  <div class="form-row">
+    <label for="node-input-variables"><i class="fa fa-list"></i> Variables (JSON)</label>
+    <input type="text" id="node-input-variables" placeholder='{"var":"value"}'>
+  </div>
+  <div class="form-tips">
+    Có thể override bằng <b>msg.query</b> & <b>msg.variables</b>.
+    Kết quả sẽ vào <b>msg.payload</b>.
+  </div>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType('datacake-query',{
+  category: 'Faerch IoT Datacake',
+  color: '#3f9bd2',
+  icon: 'db.svg',
+  defaults: {
+    name: {value:""},
+    config: {type:"datacake-config", required:true},
+    query: {value:'query { allDevices(inWorkspace:"<UUID>"){ id serialNumber verboseName online } }'},
+    variables: {value:""}
+  },
+  inputs: 1,
+  outputs: 1,
+  label: function(){ return this.name || "Datacake Query"; },
+  oneditprepare: function(){
+    try { $("#node-input-variables").typedInput({type:"json", types:["json","str"]}); } catch(e){}
+  }
+});
+</script>

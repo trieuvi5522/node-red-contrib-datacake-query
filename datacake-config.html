@@ -1,0 +1,27 @@
+<script type="text/x-red" data-template-name="datacake-config">
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-config-input-name" placeholder="EnergyWatch Workspace">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-workspace"><i class="fa fa-database"></i> Workspace ID</label>
+    <input type="text" id="node-config-input-workspace" placeholder="UUID">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-token"><i class="fa fa-key"></i> API Token</label>
+    <input type="password" id="node-config-input-token">
+  </div>
+  <div class="form-tips">Token lưu bằng <b>credentials</b>, không xuất hiện khi export flow.</div>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType('datacake-config',{
+  category: 'config',
+  defaults: {
+    name: {value:""},
+    workspace: {value:"", required:true}
+  },
+  credentials: { token: {type:"password", required:true} },
+  label: function(){ return this.name || this.workspace || "datacake-config"; }
+});
+</script>
